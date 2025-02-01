@@ -1,0 +1,25 @@
+<div class="container">
+  <h2 class="section-title">Films Populaires</h2>
+  
+  <div class="movies-grid">
+    <mat-card *ngFor="let movie of movies" class="movie-card">
+      <img mat-card-image 
+           [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" 
+           [alt]="movie.title"
+           [routerLink]="['/movie', movie.id]"
+           class="movie-poster">
+      
+      <mat-card-content>
+        <mat-chip-listbox>
+          <mat-chip highlighted>{{ movie.vote_average }}</mat-chip>
+        </mat-chip-listbox>
+        <h3 class="movie-title">{{ movie.title }}</h3>
+        <p class="movie-date">{{ movie.release_date | date:'dd MMM yyyy' }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div *ngIf="loading" class="loading-spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

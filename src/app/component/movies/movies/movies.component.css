@@ -1,0 +1,46 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .section-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+  }
+
+  .movie-card {
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .movie-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .movie-poster {
+    height: 300px;
+    object-fit: cover;
+  }
+
+  .movie-title {
+    margin: 10px 0;
+    font-weight: 500;
+  }
+
+  .movie-date {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .loading-spinner {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }

@@ -1,0 +1,49 @@
+<div class="container" *ngIf="movie">
+  <div
+    class="backdrop"
+    [style.backgroundImage]="
+      'url(https://image.tmdb.org/t/p/original' + movie.backdrop_path + ')'
+    "
+  >
+    <div class="backdrop-overlay"></div>
+  </div>
+
+  <div class="content">
+    <div class="movie-info">
+      <div class="poster">
+        <img
+          [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+          [alt]="movie.title"
+        />
+      </div>
+
+      <div class="details">
+        <h1>{{ movie.title }}</h1>
+
+        <div class="meta">
+          <mat-chip-set>
+            <mat-chip color="accent">
+              <mat-icon>star</mat-icon>
+              {{ movie.vote_average }}
+            </mat-chip>
+            <mat-chip>{{ movie.release_date | date : "yyyy" }}</mat-chip>
+          </mat-chip-set>
+        </div>
+
+        <div class="overview">
+          <h3>Synopsis</h3>
+          <p>{{ movie.overview }}</p>
+        </div>
+
+        <button mat-raised-button color="primary" (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon>
+          Retour
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="loading-container" *ngIf="loading">
+  <mat-spinner></mat-spinner>
+</div>

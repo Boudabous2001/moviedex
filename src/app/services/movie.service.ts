@@ -17,8 +17,8 @@ export class MovieService {
       params: {
         api_key: this.apiKey,
         page: page.toString(),
-        language: 'fr-FR'
-      }
+        language: 'fr-FR',
+      },
     });
   }
 
@@ -41,8 +41,8 @@ export class MovieService {
     return this.http.get(`${this.apiUrl}/genre/movie/list`, {
       params: {
         api_key: this.apiKey,
-        language: 'fr-FR'
-      }
+        language: 'fr-FR',
+      },
     });
   }
 
@@ -52,8 +52,8 @@ export class MovieService {
         api_key: this.apiKey,
         with_genres: genreId.toString(),
         page: page.toString(),
-        language: 'fr-FR'
-      }
+        language: 'fr-FR',
+      },
     });
   }
 

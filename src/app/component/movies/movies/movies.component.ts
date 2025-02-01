@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Movie } from '../../../model/movie.interface';
-import { MovieService } from '../../../services/movie.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common'; // Assurez-vous que cet import est présent
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,6 +10,8 @@ import {
   MatPaginatorModule,
   PageEvent,
 } from '@angular/material/paginator';
+import { Movie } from '../../../model/movie.interface';
+import { MovieService } from '../../../services/movie.service';
 
 @Component({
   selector: 'app-movies',
@@ -68,7 +68,7 @@ export class MoviesComponent implements OnInit {
 
   loadMovies(): void {
     this.loading = true;
-    const pageNumber = this.currentPage + 1; 
+    const pageNumber = this.currentPage + 1;
 
     this.movieService.getMovies(pageNumber).subscribe({
       next: (response) => {
@@ -79,7 +79,7 @@ export class MoviesComponent implements OnInit {
       error: (error) => {
         console.error('Erreur lors du chargement des films:', error);
         this.loading = false;
-      }
+      },
     });
   }
 

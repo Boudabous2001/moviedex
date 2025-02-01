@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/moviedex/browser",
+            "outputPath": "dist/moviedex",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -55,9 +55,12 @@
               "buildOptimizer": true
             },
             "development": {
+              "buildOptimizer": false,
               "optimization": false,
+              "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "namedChunks": true
             }
           },
           "defaultConfiguration": "production"

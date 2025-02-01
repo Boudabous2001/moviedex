@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Movie } from '../../../model/movie.interface';
 import { MovieService } from '../../../services/movie.service';
 import { CommonModule } from '@angular/common';
@@ -7,6 +7,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChipsModule } from '@angular/material/chips';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent,
+} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-movies',
@@ -18,17 +23,25 @@ import { MatChipsModule } from '@angular/material/chips';
     MatButtonModule,
     MatProgressSpinnerModule,
     MatChipsModule,
+    MatPaginatorModule,
   ],
   templateUrl: './movies.component.html',
   styleUrl: './movies.component.css',
 })
 export class MoviesComponent implements OnInit {
   movies: Movie[] = [];
-  currentPage = 1;
   loading = false;
   currentGenre: number | null = null;
   currentGenreName: string = '';
   genres: any[] = [];
+  isInViewport = false;
+  totalMovies = 0;
+  currentPage = 1;
+
+  pageSize = 10;
+  totalItems = 0;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private movieService: MovieService,
@@ -37,6 +50,7 @@ export class MoviesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadMovies();
+    this.setupLazyLoading();
 
     this.movieService.getGenres().subscribe((response) => {
       this.genres = response.genres;
@@ -54,20 +68,48 @@ export class MoviesComponent implements OnInit {
 
   loadMovies(): void {
     this.loading = true;
+    const pageNumber = this.currentPage + 1; 
 
-    const request = this.currentGenre
-      ? this.movieService.getMoviesByGenre(this.currentGenre, this.currentPage)
-      : this.movieService.getMovies(this.currentPage);
-
-    request.subscribe({
+    this.movieService.getMovies(pageNumber).subscribe({
       next: (response) => {
         this.movies = response.results;
+        this.totalItems = response.total_results;
         this.loading = false;
       },
       error: (error) => {
         console.error('Erreur lors du chargement des films:', error);
         this.loading = false;
-      },
+      }
     });
+  }
+
+  setupLazyLoading() {
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          this.isInViewport = true;
+        }
+      });
+    }, options);
+
+    document.querySelectorAll('.movie-card').forEach((card) => {
+      observer.observe(card);
+    });
+  }
+
+  onPageChange(event: PageEvent): void {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.loadMovies();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  onScroll() {
+    this.loadMovies();
   }
 }

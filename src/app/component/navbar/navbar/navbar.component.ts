@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../../../services/auth.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { MovieService } from '../../../services/movie.service';
+import { HttpClientModule } from '@angular/common/http';
 
 interface Genre {
   id: number;
@@ -25,7 +26,8 @@ interface Genre {
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    HttpClientModule
   ],
   template: `
     <mat-toolbar color="primary">

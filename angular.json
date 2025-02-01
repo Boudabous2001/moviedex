@@ -16,6 +16,7 @@
             "outputPath": "dist/moviedex",
             "index": "src/index.html",
             "browser": "src/main.ts",
+            "main": "src/test.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -79,6 +80,7 @@
               "zone.js/testing"
             ],
             "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
             "assets": [
               {
                 "glob": "**/*",

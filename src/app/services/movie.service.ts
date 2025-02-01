@@ -33,6 +33,25 @@ export class MovieService {
       `${this.apiUrl}/movie/top_rated?api_key=${this.apiKey}&page=${page}`
     );
   }
+  getGenres(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/genre/movie/list`, {
+      params: {
+        api_key: this.apiKey,
+        language: 'fr-FR'
+      }
+    });
+  }
+
+  getMoviesByGenre(genreId: number, page: number = 1): Observable<any> {
+    return this.http.get(`${this.apiUrl}/discover/movie`, {
+      params: {
+        api_key: this.apiKey,
+        with_genres: genreId.toString(),
+        page: page.toString(),
+        language: 'fr-FR'
+      }
+    });
+  }
 
   searchMovies(query: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/search/movie`, {
